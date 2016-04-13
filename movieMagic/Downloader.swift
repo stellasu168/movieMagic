@@ -6,6 +6,8 @@
 //  Copyright © 2016 Million Stars, LLC. All rights reserved.
 //
 
+// MARK: - This file is for download helper
+
 import Foundation
 
 protocol DownloaderDelegate: class {

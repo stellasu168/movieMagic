@@ -19,36 +19,44 @@ class MovieListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.downloader.delegate = self
+        self.downloader.beginDownloadingURL(self.jsonURL)
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.moviesArray?.count ?? 0
     }
 
-    /*
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = cell as? MovieTableViewCell else { return }
+        guard let moviesArray = self.moviesArray else { return }
+        
+        let cellModel = moviesArray[indexPath.row]
+        cell.model = cellModel
+        
+        if let existingData = self.downloader.dataForURL(cellModel.posterURL),
+            let posterImage = UIImage(data: existingData) {
+                cell.updateDisplayImages(posterImage)
+        } else {
+            self.downloader.beginDownloadingURL(cellModel.posterURL)
+        }
+    }
+    
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
+       
         // Configure the cell...
-
+        let optionalCell = tableView.dequeueReusableCellWithIdentifier("MovieCell") as? MovieTableViewCell
+        guard let cell = optionalCell else { fatalError() }
         return cell
+        
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -95,4 +103,37 @@ class MovieListTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension MovieListTableViewController: DownloaderDelegate {
+    func downloadFinishedForURL(finishedURL: NSURL) {
+        guard let downloadedData = self.downloader.dataForURL(finishedURL) else { return }
+        
+        if finishedURL == self.jsonURL {
+            let json = try? NSJSONSerialization.JSONObjectWithData(downloadedData, options: .AllowFragments)
+            if let jsonDictionary = json as? NSDictionary,
+                let dictionaryArray = jsonDictionary["movies"] as? [NSDictionary] {
+                    let movieArray = Movie.moviesFromDictionaryArray(dictionaryArray)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        // Grab the main queue because NSURLSession can callback on any
+                        // queue and we're touching non-atomic properties and the UI
+                        self.moviesArray = movieArray
+                        self.tableView.reloadData()
+                    }
+            }
+        } else {
+            guard let image = UIImage(data: downloadedData) else { return }
+            for cell in self.tableView.visibleCells {
+                guard let cell = cell as? MovieTableViewCell else { break }
+                if cell.model?.posterURL == finishedURL {
+                    // Grab the main queue because NSURLSession can callback on any
+                    // queue and we're touching non-atomic properties and the UI
+                    dispatch_async(dispatch_get_main_queue()) {
+                        cell.updateDisplayImages(image)
+                    }
+                    break
+                }
+            }
+        }
+    }
 }
