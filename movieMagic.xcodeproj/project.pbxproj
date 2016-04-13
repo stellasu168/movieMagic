@@ -15,6 +15,7 @@
 		552EA1361CBD009F00A9D355 /* MovieListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552EA1351CBD009F00A9D355 /* MovieListTableViewController.swift */; };
 		552EA1381CBD21B300A9D355 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552EA1371CBD21B300A9D355 /* MovieTableViewCell.swift */; };
 		552EA13A1CBD234600A9D355 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552EA1391CBD234600A9D355 /* Movie.swift */; };
+		552EA13C1CBDCD2700A9D355 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552EA13B1CBDCD2700A9D355 /* Downloader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		552EA1351CBD009F00A9D355 /* MovieListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListTableViewController.swift; sourceTree = "<group>"; };
 		552EA1371CBD21B300A9D355 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		552EA1391CBD234600A9D355 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		552EA13B1CBDCD2700A9D355 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,12 +65,13 @@
 				552EA11E1CBCD35400A9D355 /* AppDelegate.swift */,
 				552EA1351CBD009F00A9D355 /* MovieListTableViewController.swift */,
 				552EA1371CBD21B300A9D355 /* MovieTableViewCell.swift */,
+				552EA1391CBD234600A9D355 /* Movie.swift */,
+				552EA13B1CBDCD2700A9D355 /* Downloader.swift */,
 				552EA1221CBCD35400A9D355 /* Main.storyboard */,
 				552EA1281CBCD35400A9D355 /* Assets.xcassets */,
 				552EA12A1CBCD35400A9D355 /* LaunchScreen.storyboard */,
 				552EA12D1CBCD35400A9D355 /* Info.plist */,
 				552EA1251CBCD35400A9D355 /* movieMagic.xcdatamodeld */,
-				552EA1391CBD234600A9D355 /* Movie.swift */,
 			);
 			path = movieMagic;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			files = (
 				552EA1361CBD009F00A9D355 /* MovieListTableViewController.swift in Sources */,
 				552EA1271CBCD35400A9D355 /* movieMagic.xcdatamodeld in Sources */,
+				552EA13C1CBDCD2700A9D355 /* Downloader.swift in Sources */,
 				552EA1381CBD21B300A9D355 /* MovieTableViewCell.swift in Sources */,
 				552EA11F1CBCD35400A9D355 /* AppDelegate.swift in Sources */,
 				552EA13A1CBD234600A9D355 /* Movie.swift in Sources */,

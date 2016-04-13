@@ -9,6 +9,13 @@
 import UIKit
 
 class MovieListTableViewController: UITableViewController {
+    
+    private var moviesArray: [Movie]?
+    private let downloader = Downloader()
+    private let jsonURL: NSURL = {
+        let apiKey = "qe43pmsb84evcmyj43gbe7j8"
+        return NSURL(string: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey=\(apiKey)")!
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,10 +27,6 @@ class MovieListTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
 
