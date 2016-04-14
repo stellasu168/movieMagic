@@ -42,6 +42,8 @@ class MovieListTableViewController: UITableViewController {
         if let existingData = self.downloader.dataForURL(cellModel.posterURL),
             let posterImage = UIImage(data: existingData) {
                 cell.updateDisplayImages(posterImage)
+                // Saving posterImage to pass to the detail view
+                
         } else {
             self.downloader.beginDownloadingURL(cellModel.posterURL)
         }
@@ -57,18 +59,31 @@ class MovieListTableViewController: UITableViewController {
         
     }
     
-
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // Preparation before navigation
+    // Tableview is passing the cell. The cell is the sender.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "segueToDetails") {
+    
+            let movieDetailVC = segue.destinationViewController as! MovieDetailViewController
+            // Passing the cell to MovieDetailViewController
+            if let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)
+            {
+            
+                let cellModel = moviesArray![indexPath.row]
+                movieDetailVC.movie = cellModel
+            }
+            
+        }
+                
+    
     }
-    */
+ 
+} // End of MovieListTableViewController class
 
-}
+
 
 extension MovieListTableViewController: DownloaderDelegate {
     func downloadFinishedForURL(finishedURL: NSURL) {

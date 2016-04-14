@@ -11,26 +11,21 @@ import UIKit
 class MovieDetailViewController: UIViewController {
 
     @IBOutlet weak var moviePoster: UIImageView!
-    @IBOutlet weak var movieDetailView: UIScrollView!
+    @IBOutlet weak var movieDetailView: UITextView!
+    @IBOutlet weak var movieTitle: UILabel!
     
+    var movie: Movie?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+    
+        //moviePoster.image = movie?.posterURL
+        movieDetailView.text = movie?.description // using optional chaining
+        movieTitle.text = movie?.title
+        
     }
 
-    
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+ 
 }

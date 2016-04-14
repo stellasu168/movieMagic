@@ -81,7 +81,7 @@
                                     <outlet property="movieDescriptionLabel" destination="k0S-mT-XnH" id="Dph-IP-jE8"/>
                                     <outlet property="moviePosterImageView" destination="g5X-n6-AMt" id="x3r-1H-ycc"/>
                                     <outlet property="movieTitleLabel" destination="I3V-Wa-gbf" id="muV-Vo-SlF"/>
-                                    <segue destination="DXm-rD-5xo" kind="show" id="UWg-Ej-7cp"/>
+                                    <segue destination="DXm-rD-5xo" kind="show" identifier="segueToDetails" id="UWg-Ej-7cp"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -112,20 +112,31 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lwb-36-K58">
                                 <rect key="frame" x="0.0" y="64" width="375" height="196"/>
                             </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="85t-gF-fsp">
-                                <rect key="frame" x="0.0" y="259" width="375" height="249"/>
-                            </scrollView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="919-Uk-Lgx">
+                                <rect key="frame" x="0.0" y="288" width="375" height="189"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DTl-nB-85i">
                                 <rect key="frame" x="143" y="580" width="88" height="30"/>
-                                <state key="normal" title="Want to see"/>
+                                <state key="normal" title="Want To See"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Czx-J8-u56">
+                                <rect key="frame" x="6" y="268" width="369" height="21"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="movieDetailView" destination="85t-gF-fsp" id="EE9-2c-eAR"/>
+                        <outlet property="movieDetailView" destination="919-Uk-Lgx" id="5cg-Zq-Hhn"/>
                         <outlet property="moviePoster" destination="Lwb-36-K58" id="sNT-TT-vHN"/>
+                        <outlet property="movieTitle" destination="Czx-J8-u56" id="qHR-0f-VVo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nkw-dc-g8d" userLabel="First Responder" sceneMemberID="firstResponder"/>
