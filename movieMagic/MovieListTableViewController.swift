@@ -42,7 +42,6 @@ class MovieListTableViewController: UITableViewController {
         if let existingData = self.downloader.dataForURL(cellModel.posterURL),
             let posterImage = UIImage(data: existingData) {
                 cell.updateDisplayImages(posterImage)
-                // Saving posterImage to pass to the detail view
                 
         } else {
             self.downloader.beginDownloadingURL(cellModel.posterURL)
@@ -74,6 +73,7 @@ class MovieListTableViewController: UITableViewController {
             
                 let cellModel = moviesArray![indexPath.row]
                 movieDetailVC.movie = cellModel
+                
             }
             
         }
