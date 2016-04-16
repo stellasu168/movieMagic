@@ -8,24 +8,56 @@
         <!--My Movies-->
         <scene sceneID="sqq-TO-4qz">
             <objects>
-                <viewController title="My Movies" id="Gal-FO-40S" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jFA-kZ-b5O"/>
-                        <viewControllerLayoutGuide type="bottom" id="aSR-Oc-XS2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="boe-u4-Kde">
+                <viewController title="My Movies" id="Gal-FO-40S" customClass="MyMoviesViewController" customModule="movieMagic" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="123" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZoX-XR-4cx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.43707054969999998" green="0.22528073409999999" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myMovieCell" rowHeight="112" id="oZB-Fp-HDp" customClass="MyMovieTableViewCell" customModule="movieMagic" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="375" height="112"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oZB-Fp-HDp" id="SeB-w0-Xkz">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="111"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cyI-Zq-77P">
+                                            <rect key="frame" x="8" y="0.0" width="88" height="111"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Movie Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZk-MT-ScY">
+                                            <rect key="frame" x="104" y="8" width="271" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="myMoviePoster" destination="cyI-Zq-77P" id="GeR-ib-hUb"/>
+                                    <outlet property="myMovieTitle" destination="uZk-MT-ScY" id="dDS-Ce-20T"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="My Movies" id="5Sz-i6-jsd">
-                        <barButtonItem key="rightBarButtonItem" image="gear" id="9sJ-27-kMr"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="Zaf-ty-fvl">
+                            <connections>
+                                <action selector="refresh:" destination="Gal-FO-40S" id="CdE-Qf-d98"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="gear" id="9sJ-27-kMr">
+                            <connections>
+                                <action selector="settings:" destination="Gal-FO-40S" id="WEp-S4-bW6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a5a-bL-muj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="234.5" y="581.5"/>
+            <point key="canvasLocation" x="284.5" y="586.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="C5G-aM-Hvw">
@@ -38,8 +70,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Ujw-kR-CLW" kind="relationship" relationship="viewControllers" id="GFr-Yp-iXc"/>
                         <segue destination="oHi-WC-6ag" kind="relationship" relationship="viewControllers" id="Bpj-5u-8B0"/>
+                        <segue destination="Ujw-kR-CLW" kind="relationship" relationship="viewControllers" id="GFr-Yp-iXc"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfw-7I-jHJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -120,6 +152,9 @@
                                 <rect key="frame" x="104" y="580" width="167" height="30"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <state key="normal" title="Add to my movie list"/>
+                                <connections>
+                                    <action selector="addToMyMovie:" destination="DXm-rD-5xo" eventType="touchUpInside" id="qsM-5C-2Hc"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Czx-J8-u56">
                                 <rect key="frame" x="7" y="268" width="362" height="21"/>

@@ -9,6 +9,9 @@
 import UIKit
 import CoreData
 
+// Global Var
+var myMovieList = [Movie?]()
+
 class MovieDetailViewController: UIViewController {
 
     @IBOutlet weak var moviePoster: UIImageView!
@@ -17,6 +20,13 @@ class MovieDetailViewController: UIViewController {
     
     var movie: Movie?
     var data: NSData?
+    
+    /*
+    // MARK: - Core Data Convenience
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }
+    */
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +49,15 @@ class MovieDetailViewController: UIViewController {
         }
     }
 
+    @IBAction func addToMyMovie(sender: AnyObject) {
+        
+        // Add new movie to myMovieList array
+        myMovieList.append(movie!)
+        print(myMovieList.count)
+        
+        // Save to the coreData
+        
+    }
 
  
 }
