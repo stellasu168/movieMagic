@@ -21,12 +21,12 @@ class MovieDetailViewController: UIViewController {
     var movie: Movie?
     var data: NSData?
     
-    /*
+    
     // MARK: - Core Data Convenience
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }
-    */
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
