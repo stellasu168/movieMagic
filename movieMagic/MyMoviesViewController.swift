@@ -7,18 +7,50 @@
 //
 
 import UIKit
+import CoreData
 
-class MyMoviesViewController: UITableViewController {
+class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+    
+    // MARK: - Core Data Convenience
+    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }
+    
+    // Mark: - Fetched Results Controller
+    
+    // Lazily computed property pointing to the Photos entity objects, sorted by title, predicated on the pin.
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        // Create fetch request for photos which match the sent Pin.
+        let fetchRequest = NSFetchRequest(entityName: "Movie")
+        
+        
+        // Sort the fetch request by title, ascending.
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        // Create fetched results controller with the new fetch request.
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        return fetchedResultsController
+    }()
+    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Perform the fetch
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("\(error)")
+        }
+        
+        // Set the delegate to this view controller
+        fetchedResultsController.delegate = self
 
-        // Do any additional setup after loading the view.
-        /*
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.tableView.reloadData()
-        })
-        */
+  
     }
  
     @IBAction func settings(sender: AnyObject) {

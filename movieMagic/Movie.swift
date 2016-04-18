@@ -7,12 +7,15 @@
 //
 
 import Foundation
+import CoreData
 
 struct Movie {
+
     let title: String
     let description: String
     let posterURL: NSURL
 }
+
 
 extension Movie {
     static func moviesFromDictionaryArray(dictionaryArray: [NSDictionary]) -> [Movie]? {

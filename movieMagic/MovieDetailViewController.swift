@@ -53,9 +53,11 @@ class MovieDetailViewController: UIViewController {
         
         // Add new movie to myMovieList array
         myMovieList.append(movie!)
+        
+        // Saving to core data
+         CoreDataStackManager.sharedInstance().saveContext()
         print(myMovieList.count)
         
-        // Save to the coreData
         
     }
 

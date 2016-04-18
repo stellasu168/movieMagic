@@ -80,8 +80,8 @@
 				552EA11E1CBCD35400A9D355 /* AppDelegate.swift */,
 				552EA1281CBCD35400A9D355 /* Assets.xcassets */,
 				552EA12A1CBCD35400A9D355 /* LaunchScreen.storyboard */,
-				552EA12D1CBCD35400A9D355 /* Info.plist */,
 				552EA1251CBCD35400A9D355 /* movieMagic.xcdatamodeld */,
+				552EA12D1CBCD35400A9D355 /* Info.plist */,
 			);
 			path = movieMagic;
 			sourceTree = "<group>";
