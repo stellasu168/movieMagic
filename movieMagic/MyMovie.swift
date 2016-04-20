@@ -15,11 +15,13 @@ class MyMovie: NSManagedObject {
     @NSManaged var myMovieSynopsis: String
     @NSManaged var myMovieTitle: String
     
-    
+    // Class requires this
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        // Creates the entity
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
+    // Custom init - this one I'll actually use
     init(myMoviePoster: String, myMovieSynopsis: String, myMovieTitle: String, context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("MyMovie", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)

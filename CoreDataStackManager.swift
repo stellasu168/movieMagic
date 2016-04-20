@@ -46,7 +46,7 @@ class CoreDataStackManager {
         
         print("Instantiating the managedObjectModel property")
         
-        let modelURL = NSBundle.mainBundle().URLForResource("movieMagic.sqlite", withExtension: "momd")!
+        let modelURL = NSBundle.mainBundle().URLForResource("movieMagic", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
     

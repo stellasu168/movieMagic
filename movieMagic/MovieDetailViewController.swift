@@ -9,8 +9,6 @@
 import UIKit
 import CoreData
 
-// Global Var
-var myMovieList = [MyMovie?]()
 
 class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDelegate {
 
@@ -34,20 +32,6 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
     }()
 
     
-    // Lazily computed property pointing to the Photos entity objects, sorted by title, predicated on the pin.
-    lazy var fetchedResultsController: NSFetchedResultsController = {
-        
-        // Create fetch request for photos which match the sent Pin.
-        let fetchRequest = NSFetchRequest(entityName: "MyMovie")
-        
-        // Sort the fetch request by title, ascending.
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        
-        // Create fetched results controller with the new fetch request.
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
-        
-        return fetchedResultsController
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,15 +57,12 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
     @IBAction func addToMyMovie(sender: AnyObject) {
 
         
-        let newMovie = MyMovie(myMoviePoster: (movie?.posterURL.absoluteString)!, myMovieSynopsis: (movie?.description)!, myMovieTitle: (movie?.title)!, context: sharedContext)
+        _ = MyMovie(myMoviePoster: (movie?.posterURL.absoluteString)!, myMovieSynopsis: (movie?.description)!, myMovieTitle: (movie?.title)!, context: sharedContext)
         
-        // Add new movie to myMovieList array
-        myMovieList.append(newMovie)
-
+      
 
         // Saving to context in core data
         CoreDataStackManager.sharedInstance().saveContext()
-        print(myMovieList.count)
         
         
     }

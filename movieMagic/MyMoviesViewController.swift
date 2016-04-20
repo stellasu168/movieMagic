@@ -26,7 +26,7 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
         let fetchRequest = NSFetchRequest(entityName: "MyMovie")
         
         // Sort the fetch request by title, ascending.
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "myMovieTitle", ascending: true)]
         
         // Create fetched results controller with the new fetch request.
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
