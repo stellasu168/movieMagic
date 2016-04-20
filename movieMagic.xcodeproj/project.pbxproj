@@ -77,14 +77,13 @@
 				552EA1411CBF873E00A9D355 /* View */,
 				552EA1431CBF87EB00A9D355 /* Controllers */,
 				552EA13B1CBDCD2700A9D355 /* Downloader.swift */,
+				552EA11E1CBCD35400A9D355 /* AppDelegate.swift */,
 				552EA1481CC23C8300A9D355 /* CoreDataStackManager.swift */,
 				552EA1371CBD21B300A9D355 /* MovieTableViewCell.swift */,
 				552EA1461CC1C06700A9D355 /* MyMovieTableViewCell.swift */,
-				552EA11E1CBCD35400A9D355 /* AppDelegate.swift */,
 				552EA1281CBCD35400A9D355 /* Assets.xcassets */,
 				552EA12A1CBCD35400A9D355 /* LaunchScreen.storyboard */,
 				552EA12D1CBCD35400A9D355 /* Info.plist */,
-				552EA14D1CC76B6F00A9D355 /* MyMovie.swift */,
 			);
 			path = movieMagic;
 			sourceTree = "<group>";
@@ -101,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				552EA1391CBD234600A9D355 /* Movie.swift */,
+				552EA14D1CC76B6F00A9D355 /* MyMovie.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";

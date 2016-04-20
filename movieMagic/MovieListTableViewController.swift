@@ -84,7 +84,6 @@ class MovieListTableViewController: UITableViewController {
 } // End of MovieListTableViewController class
 
 
-
 extension MovieListTableViewController: DownloaderDelegate {
     func downloadFinishedForURL(finishedURL: NSURL) {
         guard let downloadedData = self.downloader.dataForURL(finishedURL) else { return }

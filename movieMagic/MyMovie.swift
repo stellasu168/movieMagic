@@ -25,6 +25,8 @@ class MyMovie: NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
         self.myMoviePoster = myMoviePoster
+        self.myMovieSynopsis = myMovieSynopsis
+        self.myMovieTitle = myMovieTitle
         
     }
     

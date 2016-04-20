@@ -19,12 +19,11 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
     
     // Mark: - Fetched Results Controller
     
-    // Lazily computed property pointing to the Photos entity objects, sorted by title, predicated on the pin.
+    // Lazily computed property pointing to the MyMovie entity objects, sorted by title.
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         // Create fetch request for photos which match the sent Pin.
-        let fetchRequest = NSFetchRequest(entityName: "Movie")
-        
+        let fetchRequest = NSFetchRequest(entityName: "MyMovie")
         
         // Sort the fetch request by title, ascending.
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
@@ -66,17 +65,20 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
 
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("myMovieList.count = \(myMovieList.count)")
-        return myMovieList.count
+
+        let sectionInfo = self.fetchedResultsController.sections![section]
+        
+        return sectionInfo.numberOfObjects
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //TODO: Implement method to return cell with the correct reuseidentifier and populated with the correct data.
         
         let cell = tableView.dequeueReusableCellWithIdentifier("myMovieCell") as! MyMovieTableViewCell
-        let currentMovie = myMovieList[indexPath.row]
+
+        let currentMovie = fetchedResultsController.objectAtIndexPath(indexPath) as! MyMovie
         
-        cell.myMovieTitle.text = currentMovie?.title
+        cell.myMovieTitle.text = currentMovie.myMovieTitle
         
         return cell
     }
