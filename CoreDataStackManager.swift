@@ -12,7 +12,7 @@
 import Foundation
 import CoreData
 
-private let SQLITE_FILE_NAME = "MovieMagic.sqlite"
+private let SQLITE_FILE_NAME = "movieMagic.sqlite"
 
 class CoreDataStackManager {
     
@@ -46,7 +46,7 @@ class CoreDataStackManager {
         
         print("Instantiating the managedObjectModel property")
         
-        let modelURL = NSBundle.mainBundle().URLForResource("MovieMagic.sqlite", withExtension: "momd")!
+        let modelURL = NSBundle.mainBundle().URLForResource("movieMagic.sqlite", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
     

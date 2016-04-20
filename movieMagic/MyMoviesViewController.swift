@@ -55,10 +55,7 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
  
     @IBAction func settings(sender: AnyObject) {
         
-        for item in myMovieList{
-            print(item)
-        }
-
+ 
     }
 
     @IBAction func refresh(sender: AnyObject) {

@@ -22,6 +22,20 @@ extension Movie {
         self.description = managedTask.valueForKey("synopsis") as! String
         self.posterURL = managedTask.valueForKey("poster") as! NSURL
     }
+/*
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(name: String, context: NSManagedObjectContext) {
+        let entity = NSEntityDescription.entityForName("Movie", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+*/    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+        
+    }
 }
 
 

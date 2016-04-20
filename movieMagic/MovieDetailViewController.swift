@@ -12,7 +12,7 @@ import CoreData
 // Global Var
 var myMovieList = [Movie?]()
 
-class MovieDetailViewController: UIViewController {
+class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDelegate {
 
     @IBOutlet weak var moviePoster: UIImageView!
     @IBOutlet weak var movieDetailView: UITextView!
@@ -54,8 +54,10 @@ class MovieDetailViewController: UIViewController {
         // Add new movie to myMovieList array
         myMovieList.append(movie!)
         
-        // Saving to core data
-         CoreDataStackManager.sharedInstance().saveContext()
+        // let context = self.fetch...
+        
+        // Saving to context in core data
+        CoreDataStackManager.sharedInstance().saveContext()
         print(myMovieList.count)
         
         
