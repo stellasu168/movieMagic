@@ -16,28 +16,6 @@ struct Movie {
     let posterURL: NSURL
 }
 
-extension Movie {
-    init(managedTask: NSManagedObject) {
-        self.title = managedTask.valueForKey("title") as! String
-        self.description = managedTask.valueForKey("synopsis") as! String
-        self.posterURL = managedTask.valueForKey("poster") as! NSURL
-    }
-/*
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
-    }
-    
-    init(name: String, context: NSManagedObjectContext) {
-        let entity = NSEntityDescription.entityForName("Movie", inManagedObjectContext: context)!
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
-    }
-*/    
-    var sharedContext: NSManagedObjectContext {
-        return CoreDataStackManager.sharedInstance().managedObjectContext
-        
-    }
-}
-
 
 extension Movie {
     static func moviesFromDictionaryArray(dictionaryArray: [NSDictionary]) -> [Movie]? {

@@ -20,6 +20,7 @@
 		552EA1451CC10B6300A9D355 /* MyMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552EA1441CC10B6300A9D355 /* MyMoviesViewController.swift */; };
 		552EA1471CC1C06700A9D355 /* MyMovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552EA1461CC1C06700A9D355 /* MyMovieTableViewCell.swift */; };
 		552EA1491CC23C8300A9D355 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552EA1481CC23C8300A9D355 /* CoreDataStackManager.swift */; };
+		552EA14E1CC76B6F00A9D355 /* MyMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552EA14D1CC76B6F00A9D355 /* MyMovie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		552EA1441CC10B6300A9D355 /* MyMoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMoviesViewController.swift; sourceTree = "<group>"; };
 		552EA1461CC1C06700A9D355 /* MyMovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMovieTableViewCell.swift; sourceTree = "<group>"; };
 		552EA1481CC23C8300A9D355 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStackManager.swift; path = ../CoreDataStackManager.swift; sourceTree = "<group>"; };
+		552EA14D1CC76B6F00A9D355 /* MyMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMovie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				552EA1281CBCD35400A9D355 /* Assets.xcassets */,
 				552EA12A1CBCD35400A9D355 /* LaunchScreen.storyboard */,
 				552EA12D1CBCD35400A9D355 /* Info.plist */,
+				552EA14D1CC76B6F00A9D355 /* MyMovie.swift */,
 			);
 			path = movieMagic;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 				552EA1401CBE6C5300A9D355 /* MovieDetailViewController.swift in Sources */,
 				552EA11F1CBCD35400A9D355 /* AppDelegate.swift in Sources */,
 				552EA13A1CBD234600A9D355 /* Movie.swift in Sources */,
+				552EA14E1CC76B6F00A9D355 /* MyMovie.swift in Sources */,
 				552EA1451CC10B6300A9D355 /* MyMoviesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
