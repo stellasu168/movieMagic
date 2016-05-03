@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 
-
 class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDelegate {
 
     @IBOutlet weak var moviePoster: UIImageView!
@@ -31,10 +30,9 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
         return appDelegate.managedObjectContext
     }()
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         movieDetailView.text = movie?.description // using optional chaining
         movieTitle.text = movie?.title
   
@@ -55,15 +53,11 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
     }
 
     @IBAction func addToMyMovie(sender: AnyObject) {
-
         
         _ = MyMovie(myMoviePoster: (movie?.posterURL.absoluteString)!, myMovieSynopsis: (movie?.description)!, myMovieTitle: (movie?.title)!, context: sharedContext)
         
-      
-
         // Saving to context in core data
         CoreDataStackManager.sharedInstance().saveContext()
-        
         
     }
 

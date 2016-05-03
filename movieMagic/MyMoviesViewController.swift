@@ -11,8 +11,9 @@ import CoreData
 
 class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
-    // MARK: - Core Data Convenience
+    var data: NSData?
     
+    // MARK: - Core Data Convenience
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }
@@ -78,7 +79,16 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
 
         let currentMovie = fetchedResultsController.objectAtIndexPath(indexPath) as! MyMovie
         
+        
         cell.myMovieTitle.text = currentMovie.myMovieTitle
+        
+        let imageURL = NSURL(string: currentMovie.myMoviePoster)
+        data = NSData(contentsOfURL:imageURL!)
+        if data != nil {
+            cell.myMoviePoster.image = UIImage(data:data!)
+        }
+        
+        
         
         return cell
     }
