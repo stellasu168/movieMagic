@@ -40,6 +40,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="myMoviePoster" destination="cyI-Zq-77P" id="GeR-ib-hUb"/>
+                                    <outlet property="myMovieSynopsis" destination="ldg-ol-DDa" id="pfy-bl-awf"/>
                                     <outlet property="myMovieTitle" destination="uZk-MT-ScY" id="dDS-Ce-20T"/>
                                 </connections>
                             </tableViewCell>

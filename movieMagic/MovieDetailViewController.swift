@@ -18,7 +18,6 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
     var movie: Movie?
     var data: NSData?
     
-    
     // MARK: - Core Data Convenience
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -53,6 +52,11 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
     }
 
     @IBAction func addToMyMovie(sender: AnyObject) {
+        
+        
+        //Check for duplicate 
+        
+        
         
         _ = MyMovie(myMoviePoster: (movie?.posterURL.absoluteString)!, myMovieSynopsis: (movie?.description)!, myMovieTitle: (movie?.title)!, context: sharedContext)
         

@@ -61,6 +61,13 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
     @IBAction func refresh(sender: AnyObject) {
         
         self.tableView.reloadData()
+        
+        // Refetch
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("\(error)")
+        }
     
     }
 
@@ -81,6 +88,7 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
         
         
         cell.myMovieTitle.text = currentMovie.myMovieTitle
+        cell.myMovieSynopsis.text = currentMovie.myMovieSynopsis
         
         let imageURL = NSURL(string: currentMovie.myMoviePoster)
         data = NSData(contentsOfURL:imageURL!)
