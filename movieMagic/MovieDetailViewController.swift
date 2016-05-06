@@ -66,7 +66,14 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
         } else {
             
             // Show an alert message
-
+            //let alertView = UIAlertView(title: "Alert", message: "This movie has been added already", delegate: self, cancelButtonTitle: "OK")
+            let alertView = UIAlertController(title: "Alert", message: "This movie has been added already", preferredStyle: .Alert)
+            
+            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action:UIAlertAction) in }
+            
+            alertView.addAction(OKAction)
+            
+            self.presentViewController(alertView, animated: true, completion: nil)
         }
         
     }
@@ -87,7 +94,6 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
             let fetchResults = try sharedContext.executeFetchRequest(request)
             
             if fetchResults.count > 0 {
-                print("already existed")
                 print(fetchResults.count)
                 return true
             }
