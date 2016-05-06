@@ -53,6 +53,17 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
   
     }
  
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("\(error)")
+        }
+
+        
+    }
  
     @IBAction func refresh(sender: AnyObject) {
         
