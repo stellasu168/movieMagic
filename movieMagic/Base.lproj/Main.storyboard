@@ -53,11 +53,6 @@
                                 <action selector="refresh:" destination="Gal-FO-40S" id="CdE-Qf-d98"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="gear" id="9sJ-27-kMr">
-                            <connections>
-                                <action selector="settings:" destination="Gal-FO-40S" id="WEp-S4-bW6"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -258,7 +253,4 @@
             <point key="canvasLocation" x="-181.5" y="586.5"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="gear" width="20" height="20"/>
-    </resources>
 </document>

@@ -53,11 +53,7 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
   
     }
  
-    @IBAction func settings(sender: AnyObject) {
-        
  
-    }
-
     @IBAction func refresh(sender: AnyObject) {
         
         self.tableView.reloadData()
@@ -95,8 +91,6 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
         if data != nil {
             cell.myMoviePoster.image = UIImage(data:data!)
         }
-        
-        
         
         return cell
     }

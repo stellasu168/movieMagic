@@ -53,17 +53,39 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
 
     @IBAction func addToMyMovie(sender: AnyObject) {
         
-        
-        //Check for duplicate 
-        
-        
-        
+        // Check for duplicate
+        if tokenExists((movie?.title)!) {
+            print ("movie already existed")
+        }
+ 
         _ = MyMovie(myMoviePoster: (movie?.posterURL.absoluteString)!, myMovieSynopsis: (movie?.description)!, myMovieTitle: (movie?.title)!, context: sharedContext)
         
         // Saving to context in core data
         CoreDataStackManager.sharedInstance().saveContext()
         
     }
+    
+    func tokenExists (aToken:String) -> Bool {
+        
+        let request: NSFetchRequest = NSFetchRequest(entityName: "MyMovie")
+        
+        let predicate = NSPredicate(format: "myMovieTitle == %@", argumentArray: [aToken])
+        
+        request.predicate = predicate
+        
+        let error: NSErrorPointer = nil
+        
+        let count = self.managedObjectContext.countForFetchRequest(request, error: error)
+        
+        if count == NSNotFound {
+            return false
+        }
+        return true
+    }
 
  
 }
+
+
+
+
