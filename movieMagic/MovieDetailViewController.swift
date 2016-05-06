@@ -54,33 +54,49 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
     @IBAction func addToMyMovie(sender: AnyObject) {
         
         // Check for duplicate
-        if tokenExists((movie?.title)!) {
+        if !movieExists((movie?.title)!) {
+            
+            _ = MyMovie(myMoviePoster: (movie?.posterURL.absoluteString)!, myMovieSynopsis: (movie?.description)!, myMovieTitle: (movie?.title)!, context: sharedContext)
+            
+            // Saving to context in core data
+            CoreDataStackManager.sharedInstance().saveContext()
+            
+        } else {
             print ("movie already existed")
+
         }
- 
-        _ = MyMovie(myMoviePoster: (movie?.posterURL.absoluteString)!, myMovieSynopsis: (movie?.description)!, myMovieTitle: (movie?.title)!, context: sharedContext)
         
-        // Saving to context in core data
-        CoreDataStackManager.sharedInstance().saveContext()
         
     }
     
-    func tokenExists (aToken:String) -> Bool {
+    func movieExists (movieToken:String) -> Bool {
         
-        let request: NSFetchRequest = NSFetchRequest(entityName: "MyMovie")
+        let request = NSFetchRequest(entityName: "MyMovie")
         
-        let predicate = NSPredicate(format: "myMovieTitle == %@", argumentArray: [aToken])
-        
+        let predicate = NSPredicate(format: "myMovieTitle == %@", movieToken)
+
         request.predicate = predicate
         
-        let error: NSErrorPointer = nil
+        print(predicate)
         
-        let count = self.managedObjectContext.countForFetchRequest(request, error: error)
+        do {
         
-        if count == NSNotFound {
-            return false
+            let fetchResults = try managedObjectContext.executeFetchRequest(request)
+            
+            print(fetchResults.count)
+
+            if fetchResults.count > 0 {
+                print(fetchResults.count)
+                return true
+            }
+
+        } catch let error as NSError {
+            print("Fetch failed: \(error.localizedDescription)")
         }
-        return true
+        
+
+    return false
+        
     }
 
  
