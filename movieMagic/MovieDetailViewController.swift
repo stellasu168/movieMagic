@@ -18,6 +18,7 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
     var movie: Movie?
     var data: NSData?
     
+    
     // MARK: - Core Data Convenience
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -31,6 +32,7 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         movieDetailView.text = movie?.description // using optional chaining
         movieTitle.text = movie?.title
@@ -62,10 +64,10 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
             CoreDataStackManager.sharedInstance().saveContext()
             
         } else {
-            print ("movie already existed")
+            
+            // Show an alert message
 
         }
-        
         
     }
     
@@ -73,6 +75,7 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
         
         let request = NSFetchRequest(entityName: "MyMovie")
         
+        // %@ means place the contents of a variable here, whatever data type it is
         let predicate = NSPredicate(format: "myMovieTitle == %@", movieToken)
 
         request.predicate = predicate
@@ -81,11 +84,10 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
         
         do {
         
-            let fetchResults = try managedObjectContext.executeFetchRequest(request)
+            let fetchResults = try sharedContext.executeFetchRequest(request)
             
-            print(fetchResults.count)
-
             if fetchResults.count > 0 {
+                print("already existed")
                 print(fetchResults.count)
                 return true
             }
@@ -94,8 +96,7 @@ class MovieDetailViewController: UIViewController, NSFetchedResultsControllerDel
             print("Fetch failed: \(error.localizedDescription)")
         }
         
-
-    return false
+        return false
         
     }
 
