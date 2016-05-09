@@ -121,7 +121,13 @@
                             <outlet property="delegate" destination="VZJ-K9-AQv" id="fx7-F9-oY0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Movie List" id="mR3-x2-iJI"/>
+                    <navigationItem key="navigationItem" title="Movie List" id="mR3-x2-iJI">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="FWA-8h-oAe">
+                            <connections>
+                                <action selector="refresh:" destination="VZJ-K9-AQv" id="ZM5-pQ-Fig"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wNd-IN-s7F" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -25,7 +25,13 @@ class MovieListTableViewController: UITableViewController {
 
     }
 
+    @IBAction func refresh(sender: AnyObject) {
+        
+        downloadFinishedForURL(jsonURL)
+        
+    }
 
+    
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,17 +74,13 @@ class MovieListTableViewController: UITableViewController {
     
             let movieDetailVC = segue.destinationViewController as! MovieDetailViewController
             // Passing the cell to MovieDetailViewController
-            if let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)
-            {
+            if let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell) {
             
                 let cellModel = moviesArray![indexPath.row]
                 movieDetailVC.movie = cellModel
                 
             }
-            
         }
-                
-    
     }
  
 } // End of MovieListTableViewController class
