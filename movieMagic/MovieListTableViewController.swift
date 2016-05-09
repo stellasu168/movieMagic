@@ -27,7 +27,7 @@ class MovieListTableViewController: UITableViewController {
 
     @IBAction func refresh(sender: AnyObject) {
         
-        downloadFinishedForURL(jsonURL)
+        self.downloader.beginDownloadingURL(jsonURL)
         
     }
 
@@ -88,20 +88,29 @@ class MovieListTableViewController: UITableViewController {
 
 extension MovieListTableViewController: DownloaderDelegate {
     func downloadFinishedForURL(finishedURL: NSURL) {
-        guard let downloadedData = self.downloader.dataForURL(finishedURL) else { return }
+        guard let downloadedData = self.downloader.dataForURL(finishedURL) else { print("Can't download data"); return }
         
         if finishedURL == self.jsonURL {
             let json = try? NSJSONSerialization.JSONObjectWithData(downloadedData, options: .AllowFragments)
+            
             if let jsonDictionary = json as? NSDictionary,
-                let dictionaryArray = jsonDictionary["movies"] as? [NSDictionary] {
-                    let movieArray = Movie.moviesFromDictionaryArray(dictionaryArray)
-                    dispatch_async(dispatch_get_main_queue()) {
+                let dictionaryArray = jsonDictionary["movies"] as? [NSDictionary]
+            
+            {
+                if let movieArray = Movie.moviesFromDictionaryArray(dictionaryArray) {
+                    dispatch_async(dispatch_get_main_queue())
+                    {
                         // Grab the main queue because NSURLSession can callback on any
                         // queue and we're touching non-atomic properties and the UI
                         self.moviesArray = movieArray
                         self.tableView.reloadData()
                     }
+                } else {
+                    print("error")
+                }
+                
             }
+            
         } else {
             guard let image = UIImage(data: downloadedData) else { return }
             for cell in self.tableView.visibleCells {
