@@ -47,13 +47,7 @@
                         </prototypes>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="My Movies" id="5Sz-i6-jsd">
-                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="Zaf-ty-fvl">
-                            <connections>
-                                <action selector="refresh:" destination="Gal-FO-40S" id="CdE-Qf-d98"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="My Movies" id="5Sz-i6-jsd"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>

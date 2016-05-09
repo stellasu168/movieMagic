@@ -65,19 +65,6 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
         
     }
  
-    @IBAction func refresh(sender: AnyObject) {
-        
-        self.tableView.reloadData()
-        
-        // Refetch
-        do {
-            try fetchedResultsController.performFetch()
-        } catch let error as NSError {
-            print("\(error)")
-        }
-    
-    }
-
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
