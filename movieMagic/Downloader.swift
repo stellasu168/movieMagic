@@ -15,7 +15,7 @@ protocol DownloaderDelegate: class {
     func downloadFinishedForURL(finishedURL: NSURL)
 }
 
-class Downloader {
+class Downloader: NSObject {
     
     weak var delegate: DownloaderDelegate?
     
@@ -26,7 +26,23 @@ class Downloader {
     
     private var downloaded = [NSURL : NSData]()
     
+    // Shared session
+/*    var session: NSURLSession
+    
+    override init() {
+        session = NSURLSession.sharedSession()
+        super.init()
+    }
+*/
+    
+    func jsonURL() -> NSURL{
+        let apiKey = "qe43pmsb84evcmyj43gbe7j8"
+        return NSURL(string: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey=\(apiKey)")!
+    }
+    
     func beginDownloadingURL(downloadURL: NSURL) {
+        
+        print("beginDownloadingURL was called")
         self.session.dataTaskWithRequest(NSURLRequest(URL: downloadURL)) { (downloadedData, response, error) in
             
             guard let downloadedData = downloadedData else {
@@ -46,7 +62,6 @@ class Downloader {
                 return
             }
 
-            
             guard let response = response as? NSHTTPURLResponse else {
                 NSLog("Downloader: Response was not an HTTP Response for URL: \(downloadURL)")
                 return
@@ -55,7 +70,8 @@ class Downloader {
             switch response.statusCode {
             case 200:
                 self.downloaded[downloadURL] = downloadedData
-                self.delegate?.downloadFinishedForURL(downloadURL)
+                print("200")
+                self.downloadFinishedForURL(downloadURL)
             default:
                 NSLog("Downloader: Received Response Code: \(response.statusCode) for URL: \(downloadURL)")
             }
@@ -65,6 +81,55 @@ class Downloader {
     func dataForURL(requestURL: NSURL) -> NSData? {
         return self.downloaded[requestURL]
     }
+    
+    func downloadFinishedForURL(finishedURL: NSURL) {
+        
+        print("downloadFinishedForURL was call")
+        
+        guard let downloadedData = dataForURL(finishedURL) else { print("Can't download data"); return }
+        
+        if finishedURL == jsonURL() {
+            let json = try? NSJSONSerialization.JSONObjectWithData(downloadedData, options: .AllowFragments)
+            
+            if let jsonDictionary = json as? NSDictionary,
+                let dictionaryArray = jsonDictionary["movies"] as? [NSDictionary]
+                
+            {
+                if let movieArray = Movie.moviesFromDictionaryArray(dictionaryArray)
+                {
+                    
+                    moviesArray = movieArray
+                    print("\(moviesArray?.count)")
+                   /* dispatch_async(dispatch_get_main_queue()) {
+                            // Grab the main queue because NSURLSession can callback on any
+                            // queue and we're touching non-atomic properties and the UI
+                            moviesArray = movieArray
+                            print("\(moviesArray?.count)")
+
+                            //self.tableView.reloadData()
+                    } */
+                    
+                    
+                }
+                
+            }
+            
+        }
+    }
+    
+    
+    // MARK: - Shared Instance
+    
+    class func sharedInstance() -> Downloader {
+        
+        struct Singleton {
+            static var sharedInstance = Downloader()
+        }
+        
+        return Singleton.sharedInstance
+    }
+
+    
 }
 
 

@@ -19,9 +19,9 @@ class MovieTableViewCell: UITableViewCell {
         }
     }
     
-    @IBOutlet private weak var moviePosterImageView: UIImageView!
-    @IBOutlet private weak var movieTitleLabel: UILabel!
-    @IBOutlet private weak var movieDescriptionLabel: UILabel!
+    @IBOutlet weak var moviePosterImageView: UIImageView!
+    @IBOutlet weak var movieTitleLabel: UILabel!
+    @IBOutlet weak var movieDescriptionLabel: UILabel!
     
     func updateDisplayImages(newImage: UIImage) {
         self.moviePosterImageView.image = newImage

@@ -8,26 +8,33 @@
 
 import UIKit
 
+var moviesArray: [Movie]?
+
 class MovieListTableViewController: UITableViewController {
     
-    private var moviesArray: [Movie]?
-    private let downloader = Downloader()
+    let downloader = Downloader()
+/*
     private let jsonURL: NSURL = {
         let apiKey = "qe43pmsb84evcmyj43gbe7j8"
         return NSURL(string: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey=\(apiKey)")!
     }()
-
+*/
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.downloader.delegate = self
-        self.downloader.beginDownloadingURL(self.jsonURL)
+        Downloader.sharedInstance().beginDownloadingURL(Downloader.sharedInstance().jsonURL())
+        self.tableView.reloadData()
+        print ("viewDidLoad - \(moviesArray?.count)")
+
 
     }
 
     @IBAction func refresh(sender: AnyObject) {
         
-        self.downloader.beginDownloadingURL(jsonURL)
+        Downloader.sharedInstance().beginDownloadingURL(Downloader.sharedInstance().jsonURL())
+        print ("refresh - \(moviesArray?.count)")
+        self.tableView.reloadData()
+
         
     }
 
@@ -35,31 +42,60 @@ class MovieListTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.moviesArray?.count ?? 0
-    }
-
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = cell as? MovieTableViewCell else { return }
-        guard let moviesArray = self.moviesArray else { return }
         
-        let cellModel = moviesArray[indexPath.row]
+        print ("numberOfRowsInSection - \(moviesArray?.count)")
+        return moviesArray?.count ?? 0
+        
+    }
+/*
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        guard let cell = cell as? MovieTableViewCell else { return }
+        //guard let moviesArray = moviesArray else { return }
+        
+        let cellModel = moviesArray![indexPath.row]
         cell.model = cellModel
         
-        if let existingData = self.downloader.dataForURL(cellModel.posterURL),
+        if let existingData = Downloader.sharedInstance().dataForURL(cellModel.posterURL),
             let posterImage = UIImage(data: existingData) {
                 cell.updateDisplayImages(posterImage)
                 
         } else {
-            self.downloader.beginDownloadingURL(cellModel.posterURL)
+            
+            print("tableview - else")
+            let downloadedData = Downloader.sharedInstance().dataForURL(Downloader.sharedInstance().jsonURL())
+            
+            guard let image = UIImage(data: downloadedData!) else { return }
+
+            
+            Downloader.sharedInstance().beginDownloadingURL(cellModel.posterURL)
+            
+            for cell in tableView.visibleCells {
+                
+                guard let cell = cell as? MovieTableViewCell else { break }
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    cell.updateDisplayImages(image)
+                }
+
+                
+            }
+            
+    
         }
     }
     
-    
+*/
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
         // Configure the cell...
-        let optionalCell = tableView.dequeueReusableCellWithIdentifier("MovieCell") as? MovieTableViewCell
-        guard let cell = optionalCell else { fatalError() }
+        let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell") as! MovieTableViewCell
+        
+        let cellModel = moviesArray![indexPath.row]
+        
+        print(cellModel.title)
+        cell.movieTitleLabel.text = cellModel.title
+        
         return cell
         
     }
@@ -86,44 +122,3 @@ class MovieListTableViewController: UITableViewController {
 } // End of MovieListTableViewController class
 
 
-extension MovieListTableViewController: DownloaderDelegate {
-    func downloadFinishedForURL(finishedURL: NSURL) {
-        guard let downloadedData = self.downloader.dataForURL(finishedURL) else { print("Can't download data"); return }
-        
-        if finishedURL == self.jsonURL {
-            let json = try? NSJSONSerialization.JSONObjectWithData(downloadedData, options: .AllowFragments)
-            
-            if let jsonDictionary = json as? NSDictionary,
-                let dictionaryArray = jsonDictionary["movies"] as? [NSDictionary]
-            
-            {
-                if let movieArray = Movie.moviesFromDictionaryArray(dictionaryArray) {
-                    dispatch_async(dispatch_get_main_queue())
-                    {
-                        // Grab the main queue because NSURLSession can callback on any
-                        // queue and we're touching non-atomic properties and the UI
-                        self.moviesArray = movieArray
-                        self.tableView.reloadData()
-                    }
-                } else {
-                    print("error")
-                }
-                
-            }
-            
-        } else {
-            guard let image = UIImage(data: downloadedData) else { return }
-            for cell in self.tableView.visibleCells {
-                guard let cell = cell as? MovieTableViewCell else { break }
-                if cell.model?.posterURL == finishedURL {
-                    // Grab the main queue because NSURLSession can callback on any
-                    // queue and we're touching non-atomic properties and the UI
-                    dispatch_async(dispatch_get_main_queue()) {
-                        cell.updateDisplayImages(image)
-                    }
-                    break
-                }
-            }
-        }
-    }
-}
