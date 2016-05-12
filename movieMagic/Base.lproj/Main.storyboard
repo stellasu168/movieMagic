@@ -117,7 +117,7 @@
                                     <outlet property="movieDescriptionLabel" destination="k0S-mT-XnH" id="Dph-IP-jE8"/>
                                     <outlet property="moviePosterImageView" destination="g5X-n6-AMt" id="x3r-1H-ycc"/>
                                     <outlet property="movieTitleLabel" destination="I3V-Wa-gbf" id="muV-Vo-SlF"/>
-                                    <segue destination="DXm-rD-5xo" kind="show" identifier="segueToDetails" animates="NO" id="UWg-Ej-7cp"/>
+                                    <segue destination="DXm-rD-5xo" kind="show" identifier="segueToDetails" id="UWg-Ej-7cp"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

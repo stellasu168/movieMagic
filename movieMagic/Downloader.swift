@@ -33,7 +33,6 @@ class Downloader: NSObject {
     
     func beginDownloadingURL(downloadURL: NSURL, completionHandler: (success: Bool) -> Void) {
         
-        print("beginDownloadingURL was called")
         self.session.dataTaskWithRequest(NSURLRequest(URL: downloadURL)) { (downloadedData, response, error) in
             
             guard let downloadedData = downloadedData else {
@@ -74,8 +73,6 @@ class Downloader: NSObject {
     }
     
     func downloadFinishedForURL(finishedURL: NSURL, completionHandler: (success: Bool) -> Void) {
-        
-        print("downloadFinishedForURL was call")
         
         guard let downloadedData = dataForURL(finishedURL) else { print("Can't download data"); return }
         
