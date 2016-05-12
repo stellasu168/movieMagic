@@ -26,21 +26,12 @@ class Downloader: NSObject {
     
     private var downloaded = [NSURL : NSData]()
     
-    // Shared session
-/*    var session: NSURLSession
-    
-    override init() {
-        session = NSURLSession.sharedSession()
-        super.init()
-    }
-*/
-    
     func jsonURL() -> NSURL{
         let apiKey = "qe43pmsb84evcmyj43gbe7j8"
         return NSURL(string: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey=\(apiKey)")!
     }
     
-    func beginDownloadingURL(downloadURL: NSURL) {
+    func beginDownloadingURL(downloadURL: NSURL, completionHandler: (success: Bool) -> Void) {
         
         print("beginDownloadingURL was called")
         self.session.dataTaskWithRequest(NSURLRequest(URL: downloadURL)) { (downloadedData, response, error) in
@@ -70,11 +61,9 @@ class Downloader: NSObject {
             
             switch response.statusCode {
             case 200:
-                print("200 was called")
                 self.downloaded[downloadURL] = downloadedData
-                self.downloadFinishedForURL(downloadURL)
+                self.downloadFinishedForURL(downloadURL, completionHandler: completionHandler)
             default:
-                print("default was called")
                 NSLog("Downloader: Received Response Code: \(response.statusCode) for URL: \(downloadURL)")
             }
             }.resume()
@@ -84,7 +73,7 @@ class Downloader: NSObject {
         return self.downloaded[requestURL]
     }
     
-    func downloadFinishedForURL(finishedURL: NSURL) {
+    func downloadFinishedForURL(finishedURL: NSURL, completionHandler: (success: Bool) -> Void) {
         
         print("downloadFinishedForURL was call")
         
@@ -101,12 +90,11 @@ class Downloader: NSObject {
                 {
                     
                     dispatch_async(dispatch_get_main_queue()) {
-                            // Grab the main queue because NSURLSession can callback on any
-                            // queue and we're touching non-atomic properties and the UI
-                            moviesArray = movieArray
-                            print("downloadFinishedForURL - \(moviesArray?.count)")
-                            
-                        NSNotificationCenter.defaultCenter().postNotificationName("GotMovies", object: nil)
+                        // Grab the main queue because NSURLSession can callback on any
+                        // queue and we're touching non-atomic properties and the UI
+                        moviesArray = movieArray
+                        completionHandler(success: true)
+                        //NSNotificationCenter.defaultCenter().postNotificationName("GotMovies", object: nil)
 
                     }
                     

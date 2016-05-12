@@ -14,7 +14,6 @@ class MovieListTableViewController: UITableViewController {
     
     var data: NSData?
     
-
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -22,25 +21,25 @@ class MovieListTableViewController: UITableViewController {
         
         activityIndicator.startAnimating()
         
-        Downloader.sharedInstance().beginDownloadingURL(Downloader.sharedInstance().jsonURL())
-        print ("viewDidLoad - \(moviesArray?.count)")
+        Downloader.sharedInstance().beginDownloadingURL(Downloader.sharedInstance().jsonURL()) { success in
+            if success{
+                self.reloadTable()
+            } else {
+                print("Download movies failed")
+            }
+            
+        }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable", name:"GotMovies", object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable", name:"GotMovies", object: nil)
 
         
     }
     
     func reloadTable() -> Void {
-        print("message received")
+
         self.tableView.reloadData()
         // stop animating
         activityIndicator.stopAnimating()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-
-    
     }
 
 
@@ -51,10 +50,12 @@ class MovieListTableViewController: UITableViewController {
         
         activityIndicator.startAnimating()
         
-        Downloader.sharedInstance().beginDownloadingURL(Downloader.sharedInstance().jsonURL())
-        print ("refresh - \(moviesArray?.count)")
-        //self.tableView.reloadData()
-
+        Downloader.sharedInstance().beginDownloadingURL(Downloader.sharedInstance().jsonURL()) { success in
+            if success {
+                self.reloadTable()
+            }
+            
+        }
         
     }
 
@@ -63,9 +64,6 @@ class MovieListTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
-        
-        print ("numberOfRowsInSection - \(moviesArray?.count)")
         return moviesArray?.count ?? 0
         
     }
@@ -74,13 +72,11 @@ class MovieListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->
         UITableViewCell {
        
-       
         // Configure the cell...
         let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell") as! MovieTableViewCell
         
         let cellModel = moviesArray![indexPath.row]
         
-        print(cellModel.title)
         cell.movieTitleLabel.text = cellModel.title
         cell.movieDescriptionLabel.text = cellModel.description
             
@@ -89,7 +85,6 @@ class MovieListTableViewController: UITableViewController {
         if data != nil {
             cell.moviePosterImageView.image = UIImage(data:data!)
         }
-
         
         return cell
         
