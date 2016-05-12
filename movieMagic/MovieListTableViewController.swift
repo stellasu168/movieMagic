@@ -25,6 +25,7 @@ class MovieListTableViewController: UITableViewController {
         Downloader.sharedInstance().beginDownloadingURL(Downloader.sharedInstance().jsonURL())
         self.tableView.reloadData()
         print ("viewDidLoad - \(moviesArray?.count)")
+        
 
 
     }

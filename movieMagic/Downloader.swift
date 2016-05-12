@@ -98,16 +98,14 @@ class Downloader: NSObject {
                 if let movieArray = Movie.moviesFromDictionaryArray(dictionaryArray)
                 {
                     
-                    moviesArray = movieArray
-                    print("\(moviesArray?.count)")
-                   /* dispatch_async(dispatch_get_main_queue()) {
+                    dispatch_async(dispatch_get_main_queue()) {
                             // Grab the main queue because NSURLSession can callback on any
                             // queue and we're touching non-atomic properties and the UI
                             moviesArray = movieArray
                             print("\(moviesArray?.count)")
 
                             //self.tableView.reloadData()
-                    } */
+                    }
                     
                     
                 }
