@@ -80,7 +80,6 @@ class MyMoviesViewController: UITableViewController, NSFetchedResultsControllerD
 
         let currentMovie = fetchedResultsController.objectAtIndexPath(indexPath) as! MyMovie
         
-        
         cell.myMovieTitle.text = currentMovie.myMovieTitle
         cell.myMovieSynopsis.text = currentMovie.myMovieSynopsis
         

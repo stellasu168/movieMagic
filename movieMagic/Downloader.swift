@@ -64,15 +64,17 @@ class Downloader: NSObject {
 
             guard let response = response as? NSHTTPURLResponse else {
                 NSLog("Downloader: Response was not an HTTP Response for URL: \(downloadURL)")
+                print("Response was not an HTTP Response for URL")
                 return
             }
             
             switch response.statusCode {
             case 200:
+                print("200 was called")
                 self.downloaded[downloadURL] = downloadedData
-                print("200")
                 self.downloadFinishedForURL(downloadURL)
             default:
+                print("default was called")
                 NSLog("Downloader: Received Response Code: \(response.statusCode) for URL: \(downloadURL)")
             }
             }.resume()
@@ -102,9 +104,10 @@ class Downloader: NSObject {
                             // Grab the main queue because NSURLSession can callback on any
                             // queue and we're touching non-atomic properties and the UI
                             moviesArray = movieArray
-                            print("\(moviesArray?.count)")
+                            print("downloadFinishedForURL - \(moviesArray?.count)")
+                            
+                        NSNotificationCenter.defaultCenter().postNotificationName("GotMovies", object: nil)
 
-                            //self.tableView.reloadData()
                     }
                     
                     

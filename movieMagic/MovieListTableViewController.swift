@@ -12,29 +12,48 @@ var moviesArray: [Movie]?
 
 class MovieListTableViewController: UITableViewController {
     
-    let downloader = Downloader()
-/*
-    private let jsonURL: NSURL = {
-        let apiKey = "qe43pmsb84evcmyj43gbe7j8"
-        return NSURL(string: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey=\(apiKey)")!
-    }()
-*/
+    var data: NSData?
+    
+
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        activityIndicator.startAnimating()
+        
         Downloader.sharedInstance().beginDownloadingURL(Downloader.sharedInstance().jsonURL())
-        self.tableView.reloadData()
         print ("viewDidLoad - \(moviesArray?.count)")
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable", name:"GotMovies", object: nil)
 
-
+        
     }
+    
+    func reloadTable() -> Void {
+        print("message received")
+        self.tableView.reloadData()
+        // stop animating
+        activityIndicator.stopAnimating()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+    
+    }
+
 
     @IBAction func refresh(sender: AnyObject) {
         
+        moviesArray?.removeAll()
+        self.tableView.reloadData()
+        
+        activityIndicator.startAnimating()
+        
         Downloader.sharedInstance().beginDownloadingURL(Downloader.sharedInstance().jsonURL())
         print ("refresh - \(moviesArray?.count)")
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
 
         
     }
@@ -44,50 +63,17 @@ class MovieListTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        
+        
         print ("numberOfRowsInSection - \(moviesArray?.count)")
         return moviesArray?.count ?? 0
         
     }
-/*
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        guard let cell = cell as? MovieTableViewCell else { return }
-        //guard let moviesArray = moviesArray else { return }
-        
-        let cellModel = moviesArray![indexPath.row]
-        cell.model = cellModel
-        
-        if let existingData = Downloader.sharedInstance().dataForURL(cellModel.posterURL),
-            let posterImage = UIImage(data: existingData) {
-                cell.updateDisplayImages(posterImage)
-                
-        } else {
-            
-            print("tableview - else")
-            let downloadedData = Downloader.sharedInstance().dataForURL(Downloader.sharedInstance().jsonURL())
-            
-            guard let image = UIImage(data: downloadedData!) else { return }
-
-            
-            Downloader.sharedInstance().beginDownloadingURL(cellModel.posterURL)
-            
-            for cell in tableView.visibleCells {
-                
-                guard let cell = cell as? MovieTableViewCell else { break }
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    cell.updateDisplayImages(image)
-                }
-
-                
-            }
-            
     
-        }
-    }
-    
-*/
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->
+        UITableViewCell {
+       
        
         // Configure the cell...
         let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell") as! MovieTableViewCell
@@ -96,6 +82,14 @@ class MovieListTableViewController: UITableViewController {
         
         print(cellModel.title)
         cell.movieTitleLabel.text = cellModel.title
+        cell.movieDescriptionLabel.text = cellModel.description
+            
+        let imageURL = NSURL(string: cellModel.posterURL.absoluteString)
+        data = NSData(contentsOfURL:imageURL!)
+        if data != nil {
+            cell.moviePosterImageView.image = UIImage(data:data!)
+        }
+
         
         return cell
         
