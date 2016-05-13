@@ -18,7 +18,7 @@ protocol DownloaderDelegate: class {
 class Downloader: NSObject {
     
     weak var delegate: DownloaderDelegate?
-    
+        
     private let session: NSURLSession = {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         return NSURLSession(configuration: config)
@@ -46,6 +46,7 @@ class Downloader: NSObject {
                     alert.message = "\(error!.localizedDescription)"
                     alert.addButtonWithTitle("OK")
                     alert.show()
+                    // Stop the activity Indicator animation
                     
                 })
 
@@ -109,7 +110,7 @@ class Downloader: NSObject {
     class func sharedInstance() -> Downloader {
         
         struct Singleton {
-            static var sharedInstance = Downloader()
+            static let sharedInstance = Downloader()
         }
         
         return Singleton.sharedInstance
